@@ -17,8 +17,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Top Eyebrow & Issue Tag */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8 border-b border-cream-300/80 pb-4">
+        {/* Top Eyebrow */}
+        <div className="flex items-center mb-8 border-b border-cream-300/80 pb-4">
           <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-burgundy-900/5 border border-gold-500/30 text-burgundy-900 text-xs font-semibold uppercase tracking-widest">
             <div className="w-5 h-5 rounded-md overflow-hidden bg-burgundy-950 flex-shrink-0 border border-gold-500/40">
               <Image
@@ -30,9 +30,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
               />
             </div>
             <span>MACNOMS MEDIA &bull; STUDIO DIRECTORY</span>
-          </div>
-          <div className="text-[11px] font-mono tracking-wider uppercase text-burgundy-800/60 hidden sm:block">
-            VOL. 01 &bull; Q1 2026 EDITION &bull; NIGERIA / GLOBAL
           </div>
         </div>
 
