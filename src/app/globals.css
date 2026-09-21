@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'lenis/dist/lenis.css';
+
+@layer base {
+  :root {
+    --cream-bg: #FAF7F2;
+    --burgundy-text: #3D0C14;
+    --gold-accent: #C5A880;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    background-color: var(--cream-bg);
+    color: var(--burgundy-text);
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
+  }
+
+  body {
+    background-color: #FAF7F2;
+    color: #3D0C14;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #3D0C14;
+    color: #FAF7F2;
+  }
+}
+
+/* Editorial grain overlay */
+.bg-grain {
+  background-image: radial-gradient(rgba(61, 12, 20, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Subtle gold foil shimmer */
+.gold-shimmer {
+  background: linear-gradient(135deg, #C5A880 0%, #F5E6CE 50%, #A8895C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4ECE1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C5A880;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #75202E;
+}
