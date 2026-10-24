@@ -36,56 +36,50 @@ const STEPS = [
 
 export const HowWeWork: React.FC = () => {
   return (
-    <section className="py-24 sm:py-32 bg-cream-200/50 border-y border-cream-300 relative">
+    <section id="method" className="py-20 sm:py-32 bg-paper-100 border-b border-paper-300 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="max-w-3xl mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-burgundy-900/10 text-burgundy-900 text-xs font-semibold uppercase tracking-widest mb-3">
-            <span>06 &bull; OUR METHODOLOGY</span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-burgundy-950 leading-[1.15]">
+        {/* Section Header from macnoms.media */}
+        <div className="max-w-3xl mb-14 sm:mb-20">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-sans font-bold tracking-tight text-ink-950 leading-[1.08]">
             No unnecessary complexity.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-burgundy-900/80 max-w-xl">
+
+          <p className="mt-4 text-base sm:text-lg text-ink-700 leading-relaxed font-normal">
             Clean, transparent frameworks built for rapid momentum. We move from strategic diagnosis to execution in days, not months.
           </p>
         </div>
 
         {/* 4 Process Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {STEPS.map((step) => {
             const Icon = step.icon;
             return (
               <div
                 key={step.step}
-                className="p-8 rounded-3xl bg-white border border-cream-300 shadow-sm hover:border-gold-500 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
+                className="p-6 sm:p-7 rounded-2xl bg-white border border-paper-300 flex flex-col justify-between hover:border-ink-950 transition-colors"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="font-mono text-xs font-bold text-gold-600 tracking-wider">
+                  <div className="flex items-center justify-between pb-3 border-b border-paper-200 mb-4">
+                    <span className="font-mono text-xs font-bold text-ink-950">
                       PHASE {step.step}
                     </span>
-                    <div className="w-9 h-9 rounded-xl bg-burgundy-900 text-cream-100 flex items-center justify-center">
-                      <Icon className="w-4 h-4" />
-                    </div>
+                    <Icon className="w-4 h-4 text-ink-950" />
                   </div>
 
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-burgundy-950 tracking-tight mb-2">
+                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-ink-950 mb-2">
                     {step.name}
                   </h3>
-
-                  <p className="text-xs sm:text-sm font-semibold text-burgundy-900 leading-snug mb-3">
+                  <p className="text-xs sm:text-sm font-semibold text-ink-900 leading-snug mb-3">
                     {step.headline}
                   </p>
-
-                  <p className="text-xs text-burgundy-900/70 leading-relaxed">
+                  <p className="text-xs text-ink-600 leading-relaxed">
                     {step.detail}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-cream-100 flex items-center gap-1.5 text-[11px] text-gold-700 font-medium font-mono">
-                  <Check className="w-3.5 h-3.5 text-gold-600" />
+                <div className="mt-6 pt-3 border-t border-paper-200 flex items-center gap-1.5 text-[10px] font-mono text-ink-700">
+                  <Check className="w-3.5 h-3.5 text-ink-950" />
                   <span>Verified Sprint Gate</span>
                 </div>
               </div>
@@ -93,14 +87,14 @@ export const HowWeWork: React.FC = () => {
           })}
         </div>
 
-        {/* Closing Commitment Banner */}
-        <div className="mt-12 p-8 sm:p-10 rounded-3xl bg-burgundy-900 text-cream-100 text-center max-w-3xl mx-auto shadow-xl border border-gold-500/30">
-          <p className="font-serif text-xl sm:text-2xl font-semibold italic text-gold-300 mb-2">
+        {/* Closing Commitment Banner from macnoms.media */}
+        <div className="mt-12 p-6 sm:p-8 rounded-2xl bg-paper-200 border border-paper-300 text-center max-w-3xl mx-auto">
+          <p className="font-serif text-lg sm:text-xl italic text-ink-900 mb-2">
             &ldquo;Strategy isn’t something we hand you and disappear. We stay close to execution.&rdquo;
           </p>
-          <p className="text-xs sm:text-sm text-cream-200/80 uppercase tracking-widest font-mono">
-            &bull; Macnoms Media Operating Doctrine &bull;
-          </p>
+          <span className="text-[10px] font-mono uppercase tracking-widest text-ink-500">
+            &bull; MACNOMS MEDIA OPERATING DOCTRINE &bull;
+          </span>
         </div>
 
       </div>

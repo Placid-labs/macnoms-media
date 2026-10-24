@@ -6,16 +6,17 @@
 
 @layer base {
   :root {
-    --cream-bg: #FAF7F2;
-    --burgundy-text: #3D0C14;
-    --gold-accent: #C5A880;
+    --paper-bg: #F5F3EC;
+    --ink-text: #121214;
+    --hairline: #E4DFD5;
+    --accent: #B99665;
   }
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
-    background-color: var(--cream-bg);
-    color: var(--burgundy-text);
+    scroll-padding-top: 5rem;
+    background-color: var(--paper-bg);
+    color: var(--ink-text);
   }
 
   html.lenis,
@@ -40,46 +41,39 @@
   }
 
   body {
-    background-color: #FAF7F2;
-    color: #3D0C14;
+    background-color: #F5F3EC;
+    color: #121214;
     font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
 
   ::selection {
-    background-color: #3D0C14;
-    color: #FAF7F2;
+    background-color: #121214;
+    color: #F5F3EC;
   }
 }
 
-/* Editorial grain overlay */
+/* Subtle architectural grain */
 .bg-grain {
-  background-image: radial-gradient(rgba(61, 12, 20, 0.04) 1px, transparent 0);
+  background-image: radial-gradient(rgba(18, 18, 20, 0.035) 1px, transparent 0);
   background-size: 24px 24px;
-}
-
-/* Subtle gold foil shimmer */
-.gold-shimmer {
-  background: linear-gradient(135deg, #C5A880 0%, #F5E6CE 50%, #A8895C 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F4ECE1;
+  background: #EFECE3;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C5A880;
+  background: #C8BEAC;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #75202E;
+  background: #121214;
 }

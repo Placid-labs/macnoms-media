@@ -58,9 +58,6 @@ export const TheProblem: React.FC = () => {
         
         {/* Section Header */}
         <div className="max-w-3xl mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-burgundy-900/10 text-burgundy-900 text-xs font-semibold uppercase tracking-widest mb-4">
-            <span>02 &bull; THE REALITY CHECK</span>
-          </div>
 
           <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-burgundy-950 leading-[1.15]">
             You don’t have an attention problem.{' '}
@@ -101,9 +98,6 @@ export const TheProblem: React.FC = () => {
                     <div>
                       {/* Step Header */}
                       <div className="flex items-center justify-between mb-4">
-                        <span className="font-mono text-xs font-bold text-gold-600">
-                          {step.step}
-                        </span>
                         <div
                           className={`w-9 h-9 rounded-xl flex items-center justify-center ${
                             step.highlight

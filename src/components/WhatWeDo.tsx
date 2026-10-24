@@ -1,15 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  Compass,
-  Sparkles,
-  Users2,
-  Megaphone,
-  Rocket,
-  ArrowRight,
-  CheckCircle2,
-} from 'lucide-react';
+import { ArrowUpRight, Plus, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface WhatWeDoProps {
   onOpenModal: (pkg?: string) => void;
@@ -18,8 +11,7 @@ interface WhatWeDoProps {
 const SERVICES = [
   {
     id: 'growth-strategy',
-    num: '01',
-    title: 'GROWTH STRATEGY',
+    title: 'Growth Strategy',
     tagline: 'Audits, positioning, growth experiments and digital roadmaps.',
     description:
       'We dismantle your existing brand mechanics to identify why prospects drop off. Through quantitative audits, market positioning, and rapid experimentation sprints, we build a predictable roadmap to revenue.',
@@ -29,13 +21,10 @@ const SERVICES = [
       'Growth experiment design & KPI tracking',
       '90-day actionable commercial roadmap',
     ],
-    icon: Compass,
-    packageId: 'audit',
   },
   {
     id: 'social-content',
-    num: '02',
-    title: 'SOCIAL & CONTENT',
+    title: 'Social & Content',
     tagline: 'Content systems designed around your audience and business goals.',
     description:
       'We do not post for the sake of an algorithm. We craft high-retention content systems engineered to build authority, provoke emotion, and drive direct commercial clicks.',
@@ -45,13 +34,10 @@ const SERVICES = [
       'Visual identity & aesthetic tone guidelines',
       'Conversion copywriting & lead hooks',
     ],
-    icon: Sparkles,
-    packageId: 'sprint',
   },
   {
     id: 'community',
-    num: '03',
-    title: 'COMMUNITY',
+    title: 'Community',
     tagline: 'Audience engagement, community building and activation.',
     description:
       'A follower is a bystander; a community member is an evangelist. We architect VIP groups, subscriber clubs, and active dialogue hubs that turn single-purchase customers into a self-sustaining tribe.',
@@ -61,13 +47,10 @@ const SERVICES = [
       'Physical & digital meetup activations',
       'Ambassador & super-fan retention programs',
     ],
-    icon: Users2,
-    packageId: 'retainer',
   },
   {
     id: 'influencer-marketing',
-    num: '04',
-    title: 'INFLUENCER MARKETING',
+    title: 'Influencer Marketing',
     tagline: 'Finding the right people, building the campaign and managing execution.',
     description:
       'No vanity endorsements. We discover niche cultural creators who actually hold genuine trust with your target demographic, negotiating and directing content that converts.',
@@ -77,13 +60,10 @@ const SERVICES = [
       'End-to-end contractual negotiation',
       'Attribution tracking & ROI reporting',
     ],
-    icon: Megaphone,
-    packageId: 'custom',
   },
   {
     id: 'campaigns-projects',
-    num: '05',
-    title: 'CAMPAIGNS & PROJECTS',
+    title: 'Campaigns & Projects',
     tagline: 'From launch ideas to real-world activations.',
     description:
       'Launching a new product, flagship pop-up, or brand reinvention? We provide end-to-end strategic campaign orchestration—uniting PR, social blitzes, experiential pop-ups, and sales triggers.',
@@ -93,126 +73,172 @@ const SERVICES = [
       'Omnichannel digital media takeover',
       'Real-time crisis management & iteration',
     ],
-    icon: Rocket,
-    packageId: 'partner',
+  },
+  {
+    id: 'billboard-ads',
+    title: 'Billboard Ads & Out-of-Home Media',
+    tagline: 'High-impact physical billboard placements across prime city corridors.',
+    description:
+      'Dominate physical cityscapes and turn daily commuter traffic into unmissable brand authority. From prime Lekki-Ikoyi link bridges and Victoria Island arteries to major LED gantries, we handle strategic site selection, media buying, creative direction, and verified deployment.',
+    image: '/images/billboard-lekki.jpg',
+    imageCaption: 'Live Gantry Placement • Lekki, Lagos',
+    deliverables: [
+      'Prime location scouting & commuter traffic audit',
+      'Out-of-home (OOH) media buying & rate negotiation',
+      'High-contrast billboard creative direction & production',
+      'Regulatory clearance, installation & GPS verification',
+    ],
   },
 ];
 
 export const WhatWeDo: React.FC<WhatWeDoProps> = ({ onOpenModal }) => {
-  const [activeService, setActiveService] = useState<string>(SERVICES[0].id);
+  const [expandedId, setExpandedId] = useState<string>('growth-strategy');
 
   return (
-    <section id="services" className="py-24 sm:py-32 relative">
+    <section id="services" className="py-20 sm:py-32 bg-paper-100 border-b border-paper-300 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 border-b border-cream-300 pb-8">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-burgundy-900/10 text-burgundy-900 text-xs font-semibold uppercase tracking-widest mb-3">
-              <span>03 &bull; SERVICES &bull; CAPABILITIES</span>
-            </div>
-            <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-burgundy-950 leading-[1.1]">
+        {/* Header from macnoms.media */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 border-b border-paper-300 mb-12 sm:mb-16">
+          <div className="max-w-3xl">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-sans font-bold tracking-tight text-ink-950 leading-[1.08]">
               Strategy first.{' '}
-              <span className="italic font-normal font-serif text-burgundy-800 block">
+              <span className="font-serif italic font-normal text-ink-700">
                 Execution where it matters.
               </span>
             </h2>
           </div>
-          <p className="text-sm sm:text-base text-burgundy-900/70 max-w-md">
-            We don’t believe in bloated retainer overheads that lead nowhere. Every engagement is rooted in sharp strategic insight and executed with rigorous creative discipline.
+          <p className="text-xs sm:text-sm text-ink-600 max-w-sm font-mono leading-relaxed">
+            We work across 6 core capabilities, designed to turn attention into community, customers and long-term brand equity.
           </p>
         </div>
 
-        {/* Five Services Stack */}
-        <div className="space-y-4">
-          {SERVICES.map((srv) => {
-            const Icon = srv.icon;
-            const isOpen = activeService === srv.id;
+        {/* Enhanced Interactive Accordion */}
+        <div className="divide-y divide-paper-300 border-y border-paper-300">
+          {SERVICES.map((item) => {
+            const isExpanded = expandedId === item.id;
             return (
               <div
-                key={srv.id}
-                onClick={() => setActiveService(srv.id)}
-                className={`rounded-3xl border transition-all duration-300 cursor-pointer overflow-hidden ${
-                  isOpen
-                    ? 'bg-white border-burgundy-900/40 shadow-xl ring-1 ring-burgundy-900/10'
-                    : 'bg-cream-200/40 border-cream-300 hover:bg-cream-200/80 hover:border-gold-500/40'
+                key={item.id}
+                className={`transition-colors duration-300 ${
+                  isExpanded ? 'bg-white/60 shadow-2xs' : 'hover:bg-white/30'
                 }`}
               >
-                {/* Header Bar */}
-                <div className="p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div className="flex items-start md:items-center gap-4 sm:gap-6">
-                    <span className="font-mono text-sm sm:text-base font-bold text-gold-600">
-                      {srv.num}
-                    </span>
-                    <div className="w-10 h-10 rounded-2xl bg-burgundy-900 text-cream-100 flex items-center justify-center shrink-0">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-serif text-xl sm:text-2xl font-bold text-burgundy-950 tracking-tight">
-                        {srv.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-burgundy-800/80 mt-0.5">
-                        {srv.tagline}
-                      </p>
-                    </div>
+                <button
+                  type="button"
+                  onClick={() => setExpandedId(isExpanded ? '' : item.id)}
+                  aria-expanded={isExpanded}
+                  className="w-full text-left py-7 sm:py-9 px-3 sm:px-6 flex items-center justify-between gap-6 group cursor-pointer focus:outline-hidden"
+                >
+                  <div className="space-y-1.5 flex-1 pr-4">
+                    <h3 className={`text-xl sm:text-3xl font-bold font-sans tracking-tight transition-colors duration-200 ${
+                      isExpanded ? 'text-ink-950' : 'text-ink-800 group-hover:text-ink-950'
+                    }`}>
+                      {item.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm font-serif italic text-ink-600">
+                      {item.tagline}
+                    </p>
                   </div>
 
-                  <div className="flex items-center gap-3 self-end md:self-auto">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-burgundy-900 hidden sm:inline">
-                      {isOpen ? 'Expanded' : 'Explore Service'}
-                    </span>
-                    <div
-                      className={`w-8 h-8 rounded-full border border-burgundy-900/30 flex items-center justify-center transition-transform duration-300 ${
-                        isOpen ? 'rotate-90 bg-burgundy-900 text-white' : 'text-burgundy-900'
-                      }`}
+                  {/* Minimalist Rotating Plus Icon Button */}
+                  <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full border transition-all duration-300 flex items-center justify-center shrink-0 ${
+                    isExpanded
+                      ? 'bg-ink-950 border-ink-950 text-paper-100 shadow-sm'
+                      : 'border-paper-300 bg-white text-ink-950 group-hover:border-ink-950 group-hover:scale-105'
+                  }`}>
+                    <motion.div
+                      animate={{ rotate: isExpanded ? 45 : 0 }}
+                      transition={{ type: 'spring', stiffness: 350, damping: 25 }}
                     >
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </div>
+                      <Plus className="w-5 h-5" />
+                    </motion.div>
                   </div>
-                </div>
+                </button>
 
-                {/* Expanded Details Body */}
-                {isOpen && (
-                  <div className="px-6 pb-8 sm:px-8 sm:pb-8 pt-2 border-t border-cream-200 animate-in fade-in duration-300">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                      <div className="lg:col-span-7 space-y-4">
-                        <p className="text-sm sm:text-base text-burgundy-900/80 leading-relaxed">
-                          {srv.description}
-                        </p>
-                        <div className="pt-2">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onOpenModal(srv.packageId);
-                            }}
-                            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-burgundy-900 text-cream-100 text-xs font-semibold uppercase tracking-wider hover:bg-burgundy-850 shadow-md transition-all"
-                          >
-                            <span>Book {srv.title}</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </button>
+                {/* Animated Expandable Body */}
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{
+                        height: 'auto',
+                        opacity: 1,
+                        transition: {
+                          height: { duration: 0.35, ease: [0.04, 0.62, 0.23, 0.98] },
+                          opacity: { duration: 0.25, delay: 0.1 },
+                        },
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                        transition: {
+                          height: { duration: 0.25, ease: [0.04, 0.62, 0.23, 0.98] },
+                          opacity: { duration: 0.15 },
+                        },
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-3 sm:px-6 pb-9 pt-2">
+                        <div className="pt-6 border-t border-paper-200 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                          
+                          {/* Overview & Action */}
+                          <div className="lg:col-span-7 space-y-5">
+                            <p className="text-sm sm:text-base text-ink-700 leading-relaxed font-normal">
+                              {item.description}
+                            </p>
+
+                            {'image' in item && item.image && (
+                              <div className="relative rounded-2xl overflow-hidden border border-paper-300 bg-ink-950 aspect-[16/9] max-w-xl shadow-xs">
+                                <img
+                                  src={item.image}
+                                  alt={item.title}
+                                  className="w-full h-full object-cover"
+                                />
+                                {'imageCaption' in item && item.imageCaption && (
+                                  <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-ink-950/85 backdrop-blur-md text-[11px] font-mono text-paper-100 border border-white/10">
+                                    {item.imageCaption}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            <div className="pt-1">
+                              <button
+                                type="button"
+                                onClick={() => onOpenModal(item.id)}
+                                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-ink-950 text-paper-100 text-xs font-semibold hover:bg-ink-850 transition-all duration-200 shadow-xs hover:shadow-md active:scale-95 group"
+                              >
+                                <span>Inquire about this capability</span>
+                                <ArrowUpRight className="w-3.5 h-3.5 text-gold-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Deliverables Checklist Box */}
+                          <div className="lg:col-span-5 bg-paper-50/80 rounded-2xl p-5 border border-paper-200 space-y-3">
+                            <span className="text-[11px] font-mono uppercase tracking-widest text-ink-500 font-bold block">
+                              Key Deliverables
+                            </span>
+                            <div className="space-y-2.5">
+                              {item.deliverables.map((deliv, idx) => (
+                                <div
+                                  key={idx}
+                                  className="flex items-start gap-2.5 text-xs text-ink-800 font-medium"
+                                >
+                                  <CheckCircle2 className="w-4 h-4 text-ink-950 shrink-0 mt-0.5" />
+                                  <span className="leading-snug">{deliv}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
                         </div>
                       </div>
-
-                      <div className="lg:col-span-5 bg-cream-100 p-5 sm:p-6 rounded-2xl border border-cream-300/80">
-                        <h4 className="text-[11px] font-bold uppercase tracking-widest text-gold-600 mb-3">
-                          Key Deliverables
-                        </h4>
-                        <ul className="space-y-2">
-                          {srv.deliverables.map((item, dIdx) => (
-                            <li
-                              key={dIdx}
-                              className="flex items-start gap-2 text-xs text-burgundy-950 leading-normal"
-                            >
-                              <CheckCircle2 className="w-3.5 h-3.5 text-gold-600 shrink-0 mt-0.5" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             );
           })}
