@@ -42,13 +42,6 @@ export const WhyMacnoms: React.FC = () => {
   return (
     <section id="why-us" className="py-20 sm:py-28 bg-[#F6F3EB] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Eyebrow Pill Badge */}
-        <div className="inline-flex items-center mb-6">
-          <span className="bg-[#ECD7BF] text-[#7A3F2A] text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full shadow-xs">
-            WHY US
-          </span>
-        </div>
-
         {/* Section Headline */}
         <h2 className="font-stencil text-[28px] min-[400px]:text-3xl sm:text-5xl md:text-6xl text-[#1E0C12] leading-[1.12] tracking-tight max-w-4xl mx-auto">
           Built for brands{' '}

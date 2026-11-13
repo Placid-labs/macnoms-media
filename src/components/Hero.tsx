@@ -195,24 +195,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenModal }) => {
       <div className="absolute inset-0 bg-grain pointer-events-none opacity-40" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        {/* Eyebrow Pill Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center"
-        >
-          <span className="bg-[#ECD7BF] text-[#7A3F2A] text-[9.5px] sm:text-[11px] font-bold tracking-[0.16em] sm:tracking-[0.2em] uppercase px-3.5 sm:px-4 py-1.5 rounded-full shadow-xs">
-            GROWTH · COMMUNITY · DIGITAL STRATEGY
-          </span>
-        </motion.div>
-
         {/* Hero Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-stencil text-[34px] min-[400px]:text-4xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-tight text-[#1E0C12] leading-[1.08] mt-5 sm:mt-6 max-w-5xl mx-auto"
+          className="font-stencil text-[34px] min-[400px]:text-4xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-tight text-[#1E0C12] leading-[1.08] max-w-5xl mx-auto"
         >
           Your brand deserves <br className="hidden sm:inline" />
           <span className="font-sans italic font-normal text-[#B85D3D]">
