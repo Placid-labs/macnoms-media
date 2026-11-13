@@ -1,159 +1,114 @@
 'use client';
 
 import React from 'react';
-import { ArrowDown, Eye, Heart, Users, ShoppingBag, TrendingUp, AlertTriangle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-const FUNNEL_STEPS = [
+const FUNNEL_STAGES = [
   {
-    step: '01',
-    name: 'ATTENTION',
-    icon: Eye,
-    subtitle: 'Where most brands stop',
-    description: 'Views, impressions, and vanity metrics that feel good on reports but do not pay overhead.',
-    status: 'Cheap & Fleeting',
-    highlight: false,
+    num: '01',
+    name: 'Attention',
+    desc: 'Views that don’t pay overhead.',
+    isHighlighted: false,
   },
   {
-    step: '02',
-    name: 'INTEREST',
-    icon: Heart,
-    subtitle: 'Cultivating resonance',
-    description: 'Moving beyond passive scrolling into genuine curiosity about your core value proposition.',
-    status: 'Curiosity Sparked',
-    highlight: false,
+    num: '02',
+    name: 'Interest',
+    desc: 'Curiosity about your value.',
+    isHighlighted: false,
   },
   {
-    step: '03',
-    name: 'COMMUNITY',
-    icon: Users,
-    subtitle: 'The Macnoms inflection point',
-    description: 'Turning casual observers into an engaged tribe who identify with your brand and advocate for it.',
-    status: 'Loyalty Secured',
-    highlight: true,
+    num: '03 · WE STEP IN',
+    name: 'Community',
+    desc: 'A tribe that advocates for you.',
+    isHighlighted: true,
   },
   {
-    step: '04',
-    name: 'ACTION',
-    icon: ShoppingBag,
-    subtitle: 'Seamless conversion',
-    description: 'Clear, high-converting purchase triggers, sign-ups, ticket bookings, and digital transactions.',
-    status: 'Revenue Generated',
-    highlight: true,
+    num: '04',
+    name: 'Action',
+    desc: 'Sign-ups, bookings, sales.',
+    isHighlighted: false,
   },
   {
-    step: '05',
-    name: 'GROWTH',
-    icon: TrendingUp,
-    subtitle: 'Compounding brand equity',
-    description: 'Repeat purchases, viral referrals, and defensible market positioning that compounds over quarters.',
-    status: 'Sustainable Scale',
-    highlight: true,
+    num: '05',
+    name: 'Growth',
+    desc: 'Equity that compounds.',
+    isHighlighted: false,
   },
 ];
 
 export const TheProblem: React.FC = () => {
   return (
-    <section id="problem" className="py-24 sm:py-32 bg-cream-200/60 relative border-y border-cream-300/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="max-w-3xl mb-16 sm:mb-20">
-
-          <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-burgundy-950 leading-[1.15]">
-            You don’t have an attention problem.{' '}
-            <span className="italic font-normal font-serif text-burgundy-800 block sm:inline">
-              You have a conversion problem.
-            </span>
-          </h2>
-
-          <div className="mt-6 space-y-4 text-base sm:text-lg text-burgundy-900/80 leading-relaxed font-normal">
-            <p>
-              Your brand might already have good products, beautiful content and people paying attention.
-            </p>
-            <p>
-              <strong className="text-burgundy-950 font-semibold">
-                But attention alone doesn’t build a business.
-              </strong>
-            </p>
-            <p className="text-sm sm:text-base text-burgundy-900/70">
-              You need a strategy that connects <span className="font-semibold text-burgundy-950">content &rarr; community &rarr; action &rarr; growth</span>. That’s where we come in.
-            </p>
-          </div>
+    <section id="doctrine" className="pt-14 sm:pt-20 pb-20 sm:pb-24 bg-[#F6F3EB] relative border-t border-[#E5DFD5]/70">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Eyebrow Pill Badge */}
+        <div className="inline-flex items-center mb-6">
+          <span className="bg-[#ECD7BF] text-[#7A3F2A] text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full shadow-xs">
+            THE SHIFT
+          </span>
         </div>
 
-        {/* Funnel Flow Cards */}
-        <div className="relative">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 lg:gap-5 relative z-10">
-            {FUNNEL_STEPS.map((step, idx) => {
-              const Icon = step.icon;
+        {/* Section Headline */}
+        <h2 className="font-stencil text-[28px] min-[400px]:text-3xl sm:text-5xl md:text-6xl text-[#1E0C12] leading-[1.12] tracking-tight max-w-4xl mx-auto">
+          You don’t have an attention <br className="hidden sm:inline" />
+          problem.{' '}
+          <span className="font-sans italic font-normal text-[#B85D3D]">
+            You have a conversion problem.
+          </span>
+        </h2>
+
+        {/* Subtitle */}
+        <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-[#524944] max-w-2xl mx-auto leading-relaxed">
+          Good products and beautiful content still don’t build a business. We connect content to community, community to action and action to growth.
+        </p>
+
+        {/* 5-Stage Conversion Funnel Container */}
+        <div className="mt-10 sm:mt-16 bg-[#200D13] text-white rounded-[24px] sm:rounded-[32px] p-6 sm:p-10 md:p-12 shadow-2xl text-left border border-[#351922]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-5">
+            {FUNNEL_STAGES.map((stage, idx) => {
               return (
-                <div key={step.step} className="flex flex-col h-full">
-                  <div
-                    className={`h-full p-6 sm:p-7 rounded-3xl border transition-all duration-300 flex flex-col justify-between ${
-                      step.highlight
-                        ? 'bg-white border-gold-500/50 shadow-xl shadow-gold-600/5 ring-1 ring-gold-500/20'
-                        : 'bg-cream-100 border-cream-300 text-burgundy-900 shadow-sm'
-                    }`}
-                  >
-                    <div>
-                      {/* Step Header */}
-                      <div className="flex items-center justify-between mb-4">
-                        <div
-                          className={`w-9 h-9 rounded-xl flex items-center justify-center ${
-                            step.highlight
-                              ? 'bg-burgundy-900 text-cream-100'
-                              : 'bg-cream-200 text-burgundy-900'
-                          }`}
-                        >
-                          <Icon className="w-4 h-4" />
-                        </div>
-                      </div>
-
-                      <h3 className="font-serif text-xl font-bold tracking-tight text-burgundy-950">
-                        {step.name}
-                      </h3>
-                      <p className="text-[11px] uppercase tracking-wider text-gold-600 font-semibold mt-0.5 mb-3">
-                        {step.subtitle}
-                      </p>
-
-                      <p className="text-xs text-burgundy-900/75 leading-relaxed">
-                        {step.description}
-                      </p>
+                <div
+                  key={stage.name}
+                  className={`flex flex-col justify-between ${
+                    idx !== FUNNEL_STAGES.length - 1
+                      ? 'border-b border-white/10 pb-5 sm:border-b-0 sm:pb-0'
+                      : ''
+                  } ${
+                    idx === FUNNEL_STAGES.length - 1 ? 'sm:col-span-2 lg:col-span-1' : ''
+                  } ${idx !== 0 ? 'lg:border-l lg:border-white/10 lg:pl-5' : ''}`}
+                >
+                  <div>
+                    {/* Number / Eyebrow */}
+                    <div
+                      className={`font-mono text-xs font-semibold tracking-wider mb-3 ${
+                        stage.isHighlighted ? 'text-[#E28D75]' : 'text-white/40'
+                      }`}
+                    >
+                      {stage.num}
                     </div>
 
-                    <div className="pt-5 mt-5 border-t border-cream-200 flex items-center justify-between text-[11px] font-mono">
-                      <span className="text-burgundy-800/60">Outcome:</span>
-                      <span
-                        className={`font-semibold ${
-                          step.highlight ? 'text-burgundy-950 font-bold' : 'text-burgundy-700'
-                        }`}
-                      >
-                        {step.status}
-                      </span>
-                    </div>
+                    {/* Stage Name */}
+                    <h3
+                      className={`font-stencil text-xl sm:text-2xl mb-2 tracking-tight ${
+                        stage.isHighlighted ? 'text-[#E28D75]' : 'text-white'
+                      }`}
+                    >
+                      {stage.name}
+                    </h3>
                   </div>
 
-                  {/* Down Arrow for Mobile */}
-                  {idx < FUNNEL_STEPS.length - 1 && (
-                    <div className="md:hidden flex justify-center py-2 text-burgundy-900/40">
-                      <ArrowDown className="w-4 h-4" />
-                    </div>
-                  )}
+                  {/* Stage Description */}
+                  <p
+                    className={`text-xs sm:text-sm leading-relaxed ${
+                      stage.isHighlighted ? 'text-white/90 font-medium' : 'text-white/60'
+                    }`}
+                  >
+                    {stage.desc}
+                  </p>
                 </div>
               );
             })}
           </div>
-
-          {/* Desktop Flow Arrow Connector Bar */}
-          <div className="hidden md:flex items-center justify-between px-10 pt-4 text-xs font-mono uppercase tracking-widest text-burgundy-800/40">
-            <span>Vanity Metrics</span>
-            <span className="flex items-center gap-2 text-gold-600 font-semibold">
-              Conversion Acceleration &rarr;
-            </span>
-            <span>Commercial Compounding</span>
-          </div>
         </div>
-
       </div>
     </section>
   );

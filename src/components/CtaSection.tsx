@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ArrowUpRight, Mail, Instagram, Linkedin, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface CtaSectionProps {
   onOpenModal: () => void;
@@ -9,68 +9,38 @@ interface CtaSectionProps {
 
 export const CtaSection: React.FC<CtaSectionProps> = ({ onOpenModal }) => {
   return (
-    <section className="py-24 sm:py-36 bg-ink-950 text-paper-100 relative overflow-hidden">
-      {/* Subtle Grain */}
-      <div className="absolute inset-0 bg-grain opacity-20 pointer-events-none" />
+    <section className="py-16 sm:py-24 bg-[#F6F3EB] relative">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="bg-[#200D13] text-white rounded-[24px] sm:rounded-[32px] p-7 sm:p-12 md:p-16 text-center shadow-2xl border border-[#351922] relative overflow-hidden"
+        >
+          {/* Headline */}
+          <h2 className="font-stencil text-[28px] min-[400px]:text-3xl sm:text-5xl md:text-6xl text-white leading-[1.12] tracking-tight">
+            Ready to make{' '}
+            <span className="font-sans italic font-normal text-[#E28D75]">
+              your next move?
+            </span>
+          </h2>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-8">
-        
-        {/* Eyebrow from macnoms.media */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-ink-800 bg-ink-900 text-gold-300 text-xs font-mono">
-          <span>Next Move &bull; Strategic Initiation</span>
-        </div>
+          {/* Subtitle */}
+          <p className="mt-4 text-sm sm:text-lg text-white/70 max-w-md mx-auto leading-relaxed font-normal">
+            Tell us what you’re building and where you’re stuck.
+          </p>
 
-        {/* Huge Headline from macnoms.media */}
-        <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-sans font-bold tracking-tight text-paper-100 leading-[1.04] max-w-4xl mx-auto">
-          Ready to make your{' '}
-          <span className="font-serif italic font-normal text-gold-300 block sm:inline">
-            next move?
-          </span>
-        </h2>
-
-        {/* Lead Prompt from macnoms.media */}
-        <p className="text-base sm:text-xl text-paper-200/80 max-w-2xl mx-auto leading-relaxed font-normal">
-          Tell us what you’re building, where you’re stuck and what you want to achieve.
-        </p>
-
-        {/* Primary CTA Button */}
-        <div className="pt-4 flex justify-center">
-          
-        </div>
-
-        {/* Direct Contacts Block from macnoms.media */}
-        <div className="pt-12 border-t border-ink-850 max-w-lg mx-auto space-y-3">
-          <a
-            href="mailto:hello@macnomsmedia.com"
-            className="text-sm sm:text-base text-paper-200 hover:text-gold-300 transition-colors inline-flex items-center gap-2"
-          >
-            <Mail className="w-4 h-4 text-gold-400" />
-            <span>hello@macnomsmedia.com</span>
-          </a>
-
-          <div className="flex items-center justify-center gap-6 text-xs text-gold-400 pt-2 font-medium">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-paper-100 transition-colors flex items-center gap-1.5"
+          {/* Button */}
+          <div className="mt-7 sm:mt-8 flex justify-center">
+            <button
+              onClick={onOpenModal}
+              className="bg-[#E8D4BA] hover:bg-[#F2DFCA] text-[#200D13] font-bold px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-xs sm:text-base transition-all duration-200 shadow-md hover:scale-105 active:scale-95 max-w-full break-all sm:break-normal"
             >
-              <Instagram className="w-3.5 h-3.5" />
-              <span>Instagram</span>
-            </a>
-            <span className="text-ink-700">&bull;</span>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-paper-100 transition-colors flex items-center gap-1.5"
-            >
-              <Linkedin className="w-3.5 h-3.5" />
-              <span>LinkedIn</span>
-            </a>
+              hello@macnomsmedia.com
+            </button>
           </div>
-        </div>
-
+        </motion.div>
       </div>
     </section>
   );

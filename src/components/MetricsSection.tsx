@@ -1,193 +1,201 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
-import { ArrowUpRight, Sparkles, TrendingUp, Users, UserCheck } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
-interface AnimatedCounterProps {
-  from?: number;
-  to: number;
+interface RollingDigitProps {
+  digits: string[];
+  delay?: number;
   duration?: number;
-  suffix?: string;
-  decimals?: number;
+  active: boolean;
 }
 
-const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
-  from = 0,
-  to,
-  duration = 2.2,
-  suffix = '',
-  decimals = 0,
+const RollingDigit: React.FC<RollingDigitProps> = ({
+  digits,
+  delay = 0,
+  duration = 1.8,
+  active,
 }) => {
-  const nodeRef = useRef<HTMLSpanElement>(null);
-  const inView = useInView(nodeRef, { once: true, margin: '-60px' });
-  const motionVal = useMotionValue(from);
-
-  useEffect(() => {
-    if (inView) {
-      const controls = animate(motionVal, to, {
-        duration,
-        ease: [0.16, 1, 0.3, 1],
-        onUpdate: (latest) => {
-          if (nodeRef.current) {
-            nodeRef.current.textContent = `${latest.toFixed(decimals)}${suffix}`;
-          }
-        },
-      });
-      return controls.stop;
-    }
-  }, [inView, motionVal, to, duration, suffix, decimals]);
-
-  return <span ref={nodeRef}>{`${from}${suffix}`}</span>;
-};
-
-interface MetricItem {
-  number: number;
-  suffix: string;
-  decimals?: number;
-  title: string;
-  caption: string;
-  context: string;
-  icon: React.ComponentType<{ className?: string }>;
-  tag: string;
-}
-
-const METRICS: MetricItem[] = [
-  {
-    number: 12,
-    suffix: 'M+',
-    title: 'Organic views generated',
-    caption: 'Zero paid ad spend required to achieve cultural resonance across digital channels.',
-    context: 'Campaign Reach',
-    icon: TrendingUp,
-    tag: 'Viral distribution',
-  },
-  {
-    number: 11,
-    suffix: 'K+',
-    title: 'Community cohorts engaged',
-    caption: 'Active local consumers and retail artisans bridged from digital into live experiences.',
-    context: 'Audience Ecosystem',
-    icon: Users,
-    tag: 'Verified attendees',
-  },
-  {
-    number: 5,
-    suffix: 'K+',
-    title: 'Direct sign-ups delivered',
-    caption: 'Qualified customer registrations driven via targeted multi-stage viral loops.',
-    context: 'Conversion Engine',
-    icon: UserCheck,
-    tag: 'Customer acquisition',
-  },
-];
-
-export const MetricsSection: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: '-100px' });
+  const count = digits.length;
+  const targetY = `${-((count - 1) / count) * 100}%`;
 
   return (
-    <section className="py-20 sm:py-28 bg-paper-200/60 border-y border-paper-300 relative overflow-hidden">
-      {/* Subtle background ambient blur */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gold-400/5 blur-[120px] rounded-full pointer-events-none" />
-
-      <div ref={containerRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 border-b border-paper-300/80 mb-12 sm:mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-2xl space-y-3"
+    <span className="relative inline-block overflow-hidden h-[1.12em] leading-[1.12] align-bottom">
+      {/* Spacer matches exact final glyph width */}
+      <span className="invisible block select-none" aria-hidden="true">
+        {digits[count - 1]}
+      </span>
+      <motion.span
+        initial={{ y: '0%' }}
+        animate={active ? { y: targetY } : { y: '0%' }}
+        transition={{
+          duration,
+          delay,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        className="absolute top-0 left-0 right-0 flex flex-col items-center will-change-transform"
+      >
+        {digits.map((digit, idx) => (
+          <span
+            key={idx}
+            className="h-[1.12em] leading-[1.12] flex items-center justify-center shrink-0"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-paper-300 text-xs font-mono text-ink-700">
-              <span className="w-2 h-2 rounded-full bg-gold-500 animate-pulse" />
-              <span>Proven track record &amp; real outcomes</span>
+            {digit}
+          </span>
+        ))}
+      </motion.span>
+    </span>
+  );
+};
+
+interface OdometerNumberProps {
+  columns: string[][];
+  suffix: string;
+  baseDelay?: number;
+  active: boolean;
+}
+
+const OdometerNumber: React.FC<OdometerNumberProps> = ({
+  columns,
+  suffix,
+  baseDelay = 0,
+  active,
+}) => {
+  return (
+    <div className="inline-flex items-baseline font-stencil text-5xl sm:text-6xl lg:text-7xl leading-none tracking-tight select-none">
+      {columns.map((digits, colIdx) => (
+        <RollingDigit
+          key={colIdx}
+          digits={digits}
+          delay={baseDelay + colIdx * 0.12}
+          duration={1.5 + colIdx * 0.25}
+          active={active}
+        />
+      ))}
+      <motion.span
+        initial={{ opacity: 0, y: 12 }}
+        animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{
+          duration: 0.5,
+          delay: baseDelay + 0.35,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        className="inline-block"
+      >
+        {suffix}
+      </motion.span>
+    </div>
+  );
+};
+
+export const MetricsSection: React.FC = () => {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(gridRef, { once: true, amount: 0.2 });
+
+  return (
+    <section className="py-16 sm:py-24 bg-[#F6F3EB] relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Eyebrow Pill Badge */}
+        <div className="inline-flex items-center mb-6">
+          <span className="bg-[#ECD7BF] text-[#7A3F2A] text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full shadow-xs">
+            IMPACT
+          </span>
+        </div>
+
+        {/* Section Headline */}
+        <h2 className="font-stencil text-[28px] min-[400px]:text-3xl sm:text-5xl md:text-6xl text-[#1E0C12] leading-[1.12] tracking-tight">
+          Real numbers,{' '}
+          <span className="font-sans italic font-normal text-[#B85D3D]">
+            not vanity metrics.
+          </span>
+        </h2>
+
+        {/* 3 Metric Cards */}
+        <div
+          ref={gridRef}
+          className="mt-10 sm:mt-16 grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 text-left"
+        >
+          {/* Card 1: Organic views (Rust) */}
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.05 }}
+            whileHover={{ y: -8, scale: 1.015, transition: { duration: 0.2 } }}
+            className="bg-[#B85D3D] text-white rounded-[24px] sm:rounded-[28px] p-7 sm:p-8 lg:p-10 shadow-xl flex flex-col justify-between min-h-[190px] sm:min-h-[220px] md:min-h-[240px]"
+          >
+            <OdometerNumber
+              columns={[
+                ['0', '1'],
+                ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2'],
+              ]}
+              suffix="M+"
+              baseDelay={0.1}
+              active={isInView}
+            />
+            <div className="mt-6">
+              <h3 className="font-bold text-lg sm:text-xl text-white">
+                Organic views
+              </h3>
+              <p className="text-white/80 text-sm mt-1">
+                Zero paid ad spend.
+              </p>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-ink-950 leading-[1.1]">
-              Quantifiable impact{' '}
-              <span className="font-serif italic font-normal text-ink-700">
-                behind every strategy.
-              </span>
-            </h2>
           </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs sm:text-sm text-ink-600 max-w-sm font-mono leading-relaxed"
+          {/* Card 2: Community members (Tan) */}
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.15 }}
+            whileHover={{ y: -8, scale: 1.015, transition: { duration: 0.2 } }}
+            className="bg-[#E8D4BA] text-[#1E0C12] rounded-[24px] sm:rounded-[28px] p-7 sm:p-8 lg:p-10 shadow-xl flex flex-col justify-between min-h-[190px] sm:min-h-[220px] md:min-h-[240px]"
           >
-            We measure our work by the real commercial and community momentum delivered to clients—not vanity dashboard figures.
-          </motion.p>
+            <OdometerNumber
+              columns={[
+                ['0', '1'],
+                ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1'],
+              ]}
+              suffix="K+"
+              baseDelay={0.25}
+              active={isInView}
+            />
+            <div className="mt-6">
+              <h3 className="font-bold text-lg sm:text-xl text-[#1E0C12]">
+                Community members
+              </h3>
+              <p className="text-[#1E0C12]/80 text-sm mt-1">
+                Moved from online to live events.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Card 3: Direct sign-ups (Dark Espresso) */}
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.25 }}
+            whileHover={{ y: -8, scale: 1.015, transition: { duration: 0.2 } }}
+            className="bg-[#200D13] text-white rounded-[24px] sm:rounded-[28px] p-7 sm:p-8 lg:p-10 shadow-xl flex flex-col justify-between min-h-[190px] sm:min-h-[220px] md:min-h-[240px] border border-[#351922]"
+          >
+            <OdometerNumber
+              columns={[['0', '1', '2', '3', '4', '5']]}
+              suffix="K+"
+              baseDelay={0.4}
+              active={isInView}
+            />
+            <div className="mt-6">
+              <h3 className="font-bold text-lg sm:text-xl text-white">
+                Direct sign-ups
+              </h3>
+              <p className="text-white/80 text-sm mt-1">
+                Driven by multi-stage viral loops.
+              </p>
+            </div>
+          </motion.div>
         </div>
-
-        {/* 3 Dedicated Metric Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {METRICS.map((item, index) => {
-            const IconComponent = item.icon;
-            return (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{
-                  duration: 0.7,
-                  delay: 0.15 * (index + 1),
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="group relative rounded-3xl bg-white border border-paper-300 p-8 sm:p-10 flex flex-col justify-between shadow-xs hover:shadow-xl hover:border-ink-950 transition-all duration-500 overflow-hidden"
-              >
-                {/* Decorative gold glow reveal on card hover */}
-                <div className="absolute top-0 right-0 w-36 h-36 bg-gold-400/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
-
-                <div>
-                  {/* Top card metadata */}
-                  <div className="flex items-center justify-between mb-8">
-                    <span className="text-xs font-mono text-ink-500 font-medium">
-                      {item.context}
-                    </span>
-                    <div className="w-10 h-10 rounded-2xl bg-paper-100 border border-paper-200 flex items-center justify-center text-ink-900 group-hover:bg-ink-950 group-hover:text-gold-400 group-hover:border-ink-950 transition-colors duration-300">
-                      <IconComponent className="w-4 h-4" />
-                    </div>
-                  </div>
-
-                  {/* Animated Big Number */}
-                  <div className="flex items-baseline gap-1 mb-4">
-                    <div className="text-5xl sm:text-6xl lg:text-7xl font-sans font-extrabold tracking-tight text-ink-950 leading-none">
-                      <AnimatedCounter
-                        to={item.number}
-                        suffix={item.suffix}
-                        decimals={item.decimals ?? 0}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Title without uppercase */}
-                  <h3 className="text-lg sm:text-xl font-bold font-sans text-ink-950 tracking-tight leading-snug mb-2 group-hover:text-ink-800 transition-colors">
-                    {item.title}
-                  </h3>
-
-                  {/* Explanatory Context */}
-                  <p className="text-xs sm:text-sm text-ink-600 leading-relaxed font-normal">
-                    {item.caption}
-                  </p>
-                </div>
-
-                {/* Bottom Tag */}
-                <div className="pt-6 mt-6 border-t border-paper-200 flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-ink-700">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gold-500" />
-                    {item.tag}
-                  </span>
-                  <ArrowUpRight className="w-4 h-4 text-ink-400 group-hover:text-ink-950 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-
       </div>
     </section>
   );

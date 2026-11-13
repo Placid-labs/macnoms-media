@@ -2,74 +2,84 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeaderProps {
   onOpenModal: (pkg?: string) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-
-    // Active section spy
-    const sections = ['work', 'services', 'doctrine', 'about', 'method', 'journal'];
-    const handleSpy = () => {
-      const scrollY = window.scrollY + 160;
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollY >= top && scrollY < top + height) {
-            setActiveSection(sectionId);
-            return;
-          }
-        }
-      }
-      if (window.scrollY < 200) {
-        setActiveSection('');
-      }
-    };
-    window.addEventListener('scroll', handleSpy, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('scroll', handleSpy);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const marqueeItems = [
+    { text: 'FREE GROWTH AUDIT ↗', action: () => onOpenModal('growth-strategy'), isLink: true },
+    { text: '12M+ ORGANIC VIEWS' },
+    { text: '11K+ COMMUNITY' },
+    { text: '5K+ SIGN-UPS' },
+  ];
+
   const navLinks = [
-    { label: 'Selected Work', href: '#work', id: 'work' },
-    { label: 'What We Do', href: '#services', id: 'services' },
-    { label: 'The Shift', href: '#doctrine', id: 'doctrine' },
-    { label: 'Why Us', href: '#about', id: 'about' },
-    { label: 'How We Work', href: '#method', id: 'method' },
-    { label: 'Journal', href: '#journal', id: 'journal' },
+    { label: 'Selected Work', href: '#work' },
+    { label: 'What We Do', href: '#what-we-do' },
+    { label: 'Why Us', href: '#why-us' },
+    { label: 'How We Work', href: '#how-we-work' },
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-300 pt-3 sm:pt-4 px-3 sm:px-6">
-      {/* Floating Island Navigation Capsule */}
-      <div
-        className={`pointer-events-auto max-w-5xl mx-auto transition-all duration-300 rounded-full border ${
-          isScrolled
-            ? 'bg-paper-100/90 backdrop-blur-xl border-ink-950/15 shadow-[0_12px_36px_-6px_rgba(18,18,20,0.12)] py-2 sm:py-2.5 px-3.5 sm:px-5'
-            : 'bg-paper-100/75 backdrop-blur-md border-paper-300/80 shadow-[0_4px_20px_-4px_rgba(18,18,20,0.05)] py-2.5 sm:py-3 px-4 sm:px-6'
-        } flex items-center justify-between`}
-      >
-        
-        {/* Left: Brand Identity */}
-        <div className="flex items-center gap-3">
-          <a href="#" className="flex items-center gap-2.5 group">
-            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-ink-950/20 bg-ink-950 flex-shrink-0 transition-transform duration-300 group-hover:scale-105 shadow-xs">
+    <>
+      {/* Top Continuous Ticker Bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-[#18090E] text-white text-[10px] sm:text-[11px] font-semibold tracking-wider py-2 overflow-hidden border-b border-[#2C131B] select-none">
+        <div className="flex w-max animate-marquee space-x-6 sm:space-x-8 items-center">
+          {[...Array(6)].map((_, loopIdx) => (
+            <div key={loopIdx} className="flex items-center space-x-6 sm:space-x-8 shrink-0">
+              {marqueeItems.map((item, idx) => (
+                <span
+                  key={`${loopIdx}-${idx}`}
+                  onClick={item.action}
+                  className={`flex items-center gap-1.5 transition-colors uppercase ${
+                    item.isLink
+                      ? 'cursor-pointer hover:text-[#E28D75] underline underline-offset-4 decoration-[#B85D3D]'
+                      : 'text-white/90'
+                  }`}
+                >
+                  {item.text}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Floating Island Navigation Pill */}
+      <header className="fixed top-10 sm:top-12 left-0 right-0 z-40 px-3 sm:px-6 pointer-events-none transition-all duration-300">
+        <div
+          className={`pointer-events-auto max-w-4xl mx-auto rounded-full bg-white/95 backdrop-blur-md transition-all duration-300 border border-[#E8E1D5] ${
+            isScrolled
+              ? 'py-2 px-3.5 sm:px-5 shadow-[0_12px_32px_rgba(24,9,14,0.12)]'
+              : 'py-2 sm:py-2.5 px-3.5 sm:px-6 shadow-[0_4px_24px_rgba(24,9,14,0.06)]'
+          } flex items-center justify-between gap-2`}
+        >
+          {/* Brand Logo & Name */}
+          <a href="#" className="flex items-center gap-2 sm:gap-2.5 group min-w-0 shrink-0">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#18090E] flex items-center justify-center text-white shrink-0 shadow-xs overflow-hidden">
               <Image
                 src="/logo.png"
                 alt="Macnoms Media Logo"
@@ -79,94 +89,89 @@ export const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
                 priority
               />
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-serif font-black text-sm sm:text-base tracking-tight text-ink-950 group-hover:text-ink-700 transition-colors">
-                Macnoms Media
-              </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse hidden xs:inline-block" />
-            </div>
+            <span className="font-stencil text-sm min-[400px]:text-base sm:text-lg tracking-tight text-[#18090E] group-hover:text-[#B85D3D] transition-colors whitespace-nowrap">
+              Macnoms Media
+            </span>
           </a>
-        </div>
 
-        {/* Center: Desktop Nav Links with Active Capsule Indicator (Title Case) */}
-        <nav className="hidden lg:flex items-center gap-1 bg-paper-200/50 p-1 rounded-full border border-paper-300/60">
-          {navLinks.map((link) => {
-            const isActive = activeSection === link.id;
-            return (
+          {/* Desktop / Tablet Nav Links */}
+          <nav className="hidden md:flex items-center gap-4 lg:gap-7 text-xs lg:text-sm font-semibold text-[#18090E]/80">
+            {navLinks.map((link) => (
               <a
-                key={link.href}
+                key={link.label}
                 href={link.href}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 flex items-center gap-1.5 whitespace-nowrap ${
-                  isActive
-                    ? 'bg-ink-950 text-paper-100 shadow-xs'
-                    : 'text-ink-700 hover:text-ink-950 hover:bg-white/70'
-                }`}
+                className="hover:text-[#B85D3D] transition-colors whitespace-nowrap"
               >
-                <span>{link.label}</span>
+                {link.label}
               </a>
-            );
-          })}
-        </nav>
-
-        {/* Right: Primary Action (Title Case) */}
-        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-          {/* Mobile Hamburger Button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden w-9 h-9 rounded-full bg-paper-200/80 hover:bg-paper-300 text-ink-950 flex items-center justify-center transition-colors border border-paper-300 shrink-0"
-            aria-label="Toggle Menu"
-          >
-            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-          </button>
-        </div>
-
-      </div>
-
-      {/* Mobile Curtain Overlay & Drawer */}
-      {mobileMenuOpen && (
-        <div className="pointer-events-auto lg:hidden fixed inset-x-3 sm:inset-x-6 top-18 bg-paper-100/98 backdrop-blur-2xl border border-ink-950/15 rounded-3xl p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200 space-y-6">
-          
-          <div className="flex items-center justify-between pb-3 border-b border-paper-300 text-xs text-ink-600 font-medium">
-            <span>Macnoms Media</span>
-            <span className="text-ink-400 text-[11px] font-mono">Lagos &bull; Global</span>
-          </div>
-
-          {/* Editorial Nav Links (Title Case) */}
-          <nav className="flex flex-col space-y-2">
-            {navLinks.map((link) => {
-              const isActive = activeSection === link.id;
-              return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`py-3 px-4 rounded-2xl flex items-center justify-between transition-colors ${
-                    isActive
-                      ? 'bg-ink-950 text-paper-100 font-semibold'
-                      : 'text-ink-950 hover:bg-paper-200'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="font-serif text-lg tracking-tight">{link.label}</span>
-                  </div>
-                  <ArrowUpRight className={`w-4 h-4 ${isActive ? 'text-gold-400' : 'opacity-40'}`} />
-                </a>
-              );
-            })}
+            ))}
           </nav>
 
-          {/* Quick Direct Inquiries & Button */}
-          <div className="pt-2 border-t border-paper-300 space-y-3">
+          {/* Right Action Button & Mobile Toggle */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <button
+              onClick={() => onOpenModal('growth-strategy')}
+              className="bg-[#18090E] hover:bg-[#B85D3D] text-white text-[11px] min-[400px]:text-xs sm:text-sm font-bold px-3 min-[400px]:px-4 sm:px-5 py-1.5 min-[400px]:py-2 sm:py-2.5 rounded-full transition-all duration-200 shadow-sm whitespace-nowrap"
+            >
+              Start a project
+            </button>
 
-            <div className="flex items-center justify-between text-xs text-ink-500 pt-1 px-1">
-              <span>hello@macnomsmedia.com</span>
-              <span>Lagos / Global</span>
-            </div>
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-1.5 sm:p-2 rounded-full text-[#18090E] hover:bg-black/5 transition-colors"
+              aria-label="Toggle Navigation Menu"
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
-
         </div>
-      )}
-    </header>
+
+        {/* Mobile Dropdown Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setMobileMenuOpen(false)}
+                className="fixed inset-0 top-10 bg-black/20 backdrop-blur-[1px] md:hidden pointer-events-auto -z-10"
+              />
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+                className="pointer-events-auto mt-2.5 max-w-sm mx-auto bg-white rounded-3xl border border-[#E8E1D5] shadow-2xl p-4 sm:p-5 flex flex-col gap-1.5 md:hidden"
+              >
+                {navLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-4 py-3 rounded-2xl font-semibold text-sm text-[#18090E] hover:bg-[#F6F3EB] hover:text-[#B85D3D] transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+                <div className="pt-2 mt-1 border-t border-[#E8E1D5]">
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenModal('growth-strategy');
+                    }}
+                    className="w-full bg-[#18090E] hover:bg-[#B85D3D] text-white font-bold py-3.5 rounded-full text-xs uppercase tracking-wider transition-colors"
+                  >
+                    Start a project
+                  </button>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      </header>
+    </>
   );
 };

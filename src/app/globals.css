@@ -1,22 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import 'lenis/dist/lenis.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import 'lenis/dist/lenis.css';
-
 @layer base {
   :root {
-    --paper-bg: #F5F3EC;
-    --ink-text: #121214;
-    --hairline: #E4DFD5;
-    --accent: #B99665;
+    --brand-bg: #F6F3EB;
+    --brand-dark: #200D13;
+    --brand-rust: #B85D3D;
+    --brand-tan: #E8D4BA;
   }
 
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
-    background-color: var(--paper-bg);
-    color: var(--ink-text);
+    background-color: #F6F3EB;
+    color: #1E0C12;
   }
 
   html.lenis,
@@ -41,22 +42,26 @@
   }
 
   body {
-    background-color: #F5F3EC;
-    color: #121214;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #F6F3EB;
+    color: #1E0C12;
+    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   ::selection {
-    background-color: #121214;
-    color: #F5F3EC;
+    background-color: #200D13;
+    color: #F6F3EB;
   }
+}
+
+.font-stencil {
+  font-family: 'Black Ops One', cursive, sans-serif;
 }
 
 /* Subtle architectural grain */
 .bg-grain {
-  background-image: radial-gradient(rgba(18, 18, 20, 0.035) 1px, transparent 0);
+  background-image: radial-gradient(rgba(32, 13, 19, 0.04) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
@@ -75,5 +80,5 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #121214;
+  background: #200D13;
 }

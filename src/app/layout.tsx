@@ -3,9 +3,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://macnomsmedia.com'),
-  title: "MACNOMS MEDIA — Growth · Community · Digital Strategy",
+  title: "Macnoms Media — Growth · Community · Digital Strategy",
   description:
-    "We help ambitious brands turn attention into community, customers and growth. Strategy first, execution where it matters.",
+    "We build growth systems that turn attention into community, customers and long-term brand value. Strategy first. Execution where it matters.",
   keywords: [
     "Macnoms Media",
     "Growth Consultancy",
@@ -14,17 +14,17 @@ export const metadata: Metadata = {
     "Digital Strategy",
     "Brand Growth",
   ],
-  authors: [{ name: "Macnoms Media" }, { name: "Placid Labs", url: "https://placidlabs.com" }],
-  creator: "Placid Labs",
+  authors: [{ name: "Macnoms Media" }],
+  creator: "Macnoms Media",
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
     apple: "/logo.png",
   },
   openGraph: {
-    title: "MACNOMS MEDIA — Growth · Community · Digital Strategy",
+    title: "Macnoms Media — Growth · Community · Digital Strategy",
     description:
-      "We help ambitious brands turn attention into community, customers and long-term brand value.",
+      "We build growth systems that turn attention into community, customers and long-term brand value.",
     url: "https://macnomsmedia.com",
     siteName: "Macnoms Media",
     images: [
@@ -51,11 +51,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="bg-cream-100 text-burgundy-950 font-sans antialiased selection:bg-burgundy-900 selection:text-cream-100 min-h-screen">
+      <body className="bg-[#F6F3EB] text-[#1E0C12] font-sans antialiased selection:bg-[#200D13] selection:text-[#F6F3EB] min-h-screen">
         {children}
       </body>
     </html>

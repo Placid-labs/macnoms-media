@@ -3,14 +3,12 @@
 import React, { useState } from 'react';
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
-import { MetricsSection } from '@/components/MetricsSection';
 import { TheProblem } from '@/components/TheProblem';
+import { MetricsSection } from '@/components/MetricsSection';
 import { WhatWeDo } from '@/components/WhatWeDo';
 import { CaseStudies } from '@/components/CaseStudies';
 import { WhyMacnoms } from '@/components/WhyMacnoms';
 import { HowWeWork } from '@/components/HowWeWork';
-import { JournalSection } from '@/components/JournalSection';
-import { WhoWeWorkWith } from '@/components/WhoWeWorkWith';
 import { CtaSection } from '@/components/CtaSection';
 import { Footer } from '@/components/Footer';
 import { ProjectModal } from '@/components/ProjectModal';
@@ -27,46 +25,40 @@ export default function Home() {
 
   return (
     <SmoothScroll>
-      <div className="relative min-h-screen bg-paper-100 text-ink-950 flex flex-col font-sans selection:bg-ink-950 selection:text-paper-100">
-        {/* Architectural Sticky Header */}
+      <div className="relative min-h-screen bg-[#F6F3EB] text-[#1E0C12] flex flex-col font-sans selection:bg-[#200D13] selection:text-[#F6F3EB]">
+        {/* Continuous Ticker & Floating Navbar */}
         <Header onOpenModal={handleOpenModal} />
 
         <main className="flex-1">
-          {/* Hero Showcase */}
+          {/* Hero Section with Convex Arch Fan of Cards */}
           <Hero onOpenModal={() => handleOpenModal('growth-strategy')} />
 
-          {/* Dedicated Metrics & Track Record Section */}
-          <MetricsSection />
-
-          {/* Diagnostic Doctrine & Conversion Shift */}
+          {/* The Shift / 5-Stage Conversion Funnel */}
           <TheProblem />
 
-          {/* 03 — Disciplines & Capabilities Matrix */}
+          {/* Impact / Real Numbers Counter */}
+          <MetricsSection />
+
+          {/* What We Do / Bento Service Matrix */}
           <WhatWeDo onOpenModal={handleOpenModal} />
 
-          {/* 04 — Selected Archive & Filterable Case Study CMS */}
-          <CaseStudies onOpenModal={() => handleOpenModal('growth-strategy')} />
+          {/* Case Studies / 2x2 Grid Archive */}
+          <CaseStudies onOpenModal={handleOpenModal} />
 
-          {/* 05 — Studio Philosophy & Three Pillars Snapshot */}
+          {/* Why Us / Built for brands with somewhere to go */}
           <WhyMacnoms />
 
-          {/* 06 — Operating Methodology & Sprint Gates */}
+          {/* How We Work / Interactive Accordion */}
           <HowWeWork />
 
-          {/* 07 — Field Notes & Editorial Journal */}
-          <JournalSection />
-
-          {/* 08 — Target Partnerships & Partner Ticker */}
-          <WhoWeWorkWith />
-
-          {/* 09 — Initiate Project Scoping Banner */}
+          {/* Call to Action Banner */}
           <CtaSection onOpenModal={() => handleOpenModal('growth-strategy')} />
         </main>
 
-        {/* 10 — Monumental Colophon Footer */}
+        {/* Minimal Footer */}
         <Footer />
 
-        {/* Interactive Studio Project Inquiry Drawer */}
+        {/* Project Inquiry Modal */}
         <ProjectModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
