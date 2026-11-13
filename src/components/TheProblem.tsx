@@ -1,35 +1,29 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 
 const FUNNEL_STAGES = [
   {
-    num: '01',
     name: 'Attention',
     desc: 'Views that don’t pay overhead.',
     isHighlighted: false,
   },
   {
-    num: '02',
     name: 'Interest',
     desc: 'Curiosity about your value.',
     isHighlighted: false,
   },
   {
-    num: '03 · WE STEP IN',
     name: 'Community',
     desc: 'A tribe that advocates for you.',
     isHighlighted: true,
   },
   {
-    num: '04',
     name: 'Action',
     desc: 'Sign-ups, bookings, sales.',
     isHighlighted: false,
   },
   {
-    num: '05',
     name: 'Growth',
     desc: 'Equity that compounds.',
     isHighlighted: false,
@@ -70,15 +64,6 @@ export const TheProblem: React.FC = () => {
                   } ${idx !== 0 ? 'lg:border-l lg:border-white/10 lg:pl-5' : ''}`}
                 >
                   <div>
-                    {/* Number / Eyebrow */}
-                    <div
-                      className={`font-mono text-xs font-semibold tracking-wider mb-3 ${
-                        stage.isHighlighted ? 'text-[#E28D75]' : 'text-white/40'
-                      }`}
-                    >
-                      {stage.num}
-                    </div>
-
                     {/* Stage Name */}
                     <h3
                       className={`font-stencil text-xl sm:text-2xl mb-2 tracking-tight ${
